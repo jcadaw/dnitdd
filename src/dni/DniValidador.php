@@ -15,8 +15,10 @@ class DniValidador {
         if(preg_match('/\d$/', $dni)){
             throw new DomainException('dni termina en número');
         }
-
-        throw new DomainException('dni termina letra incorrecta');
+        if (preg_match('/[IOU]$/', $dni)){
+            throw new DomainException('dni termina letra incorrecta');
+        }
+        throw new DomainException('dni contiene letra en medio');
     }
 
     /**

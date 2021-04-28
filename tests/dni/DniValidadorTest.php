@@ -58,9 +58,10 @@ class DniValidadorTest extends TestCase{
     
     /**
      * @covers ::__construct    
+     * @dataProvider providerDniLetraFinalIncorrecta
      */
-    public function testDeberiaFallarCuandoDniTerminaEnLetraIncorrecta(){
-        $dni = '12345678I';
+    public function testDeberiaFallarCuandoDniTerminaEnLetraIncorrecta(string $dni){
+//        $dni = '12345678I';
 
         try{
             $sut = new DniValidador($dni);
@@ -70,4 +71,30 @@ class DniValidadorTest extends TestCase{
             $this->expectExceptionMessage('dni termina letra incorrecta');
         }
     }     
+
+
+    public function providerDniLetraFinalIncorrecta(){
+        return [
+            ['12345678I'],
+            ['12345678O'],
+            ['12345678U'],
+//            ['12345678Ñ'],
+        ];
+    }
+
+
+    /**
+     * @covers ::__construct    
+     */
+    public function testDeberiaFallarCuandoDniContieneLetraEnMedio(){
+        $dni = '1234A567A';
+
+        try{
+            $sut = new DniValidador($dni);
+        }
+        finally{
+            $this->expectException(DomainException::class);
+            $this->expectExceptionMessage('dni contiene letra en medio');
+        }
+    }      
 }
