@@ -13,6 +13,17 @@ use InvalidArgumentException;
  * @coversDefaultClass \Daw\Dni\DniValidador
  */
 class DniValidadorTest extends TestCase{
+    public function providerDniCaracterFinalIncorrecto(){
+        return [
+            ['12345678I'],
+            ['12345678O'],
+            ['12345678U'],
+//            ['12345678Ñ'],
+            ['12345678_'],
+            ['12345678.'],
+        ];
+    }
+
 
     /**
      * @covers ::__construct    
@@ -59,9 +70,9 @@ class DniValidadorTest extends TestCase{
     
     /**
      * @covers ::__construct    
-     * @dataProvider providerDniLetraFinalIncorrecta
+     * @dataProvider providerDniCaracterFinalIncorrecto
      */
-    public function testDeberiaFallarCuandoDniTerminaEnLetraIncorrecta(string $dni){
+    public function testDeberiaFallarCuandoDniTerminaEnCaracterIncorrecto(string $dni){
 //        $dni = '12345678I';
 
         try{
@@ -74,14 +85,7 @@ class DniValidadorTest extends TestCase{
     }     
 
 
-    public function providerDniLetraFinalIncorrecta(){
-        return [
-            ['12345678I'],
-            ['12345678O'],
-            ['12345678U'],
-//            ['12345678Ñ'],
-        ];
-    }
+
 
 
     /**

@@ -9,11 +9,12 @@ use InvalidArgumentException;
 
 class DniValidador {
     private const LONGITUD_VALIDA = 9;
+    private const PATRON_DNI = '/^[XYZ0-9]\d{7}[A-HJ-NP-TV-Z]$/';
 
     public function __construct(string $dni){
         $this->comprobarLongitudCorrecta($dni);
         
-        if (!preg_match('/^[XYZ0-9]\d{7}[^IOU\d]$/', $dni)){
+        if (!preg_match(self::PATRON_DNI, $dni)){
             throw new DomainException('dni formato incorrecto');
         }
 
