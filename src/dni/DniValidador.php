@@ -5,6 +5,7 @@ namespace Daw\Dni;
 
 use LengthException;
 use DomainException;
+use InvalidArgumentException;
 
 class DniValidador {
     private const LONGITUD_VALIDA = 9;
@@ -18,7 +19,14 @@ class DniValidador {
         if (preg_match('/[IOU]$/', $dni)){
             throw new DomainException('dni termina letra incorrecta');
         }
-        throw new DomainException('dni contiene letra en medio');
+        if (!preg_match('/\d{7}.$/', $dni)){
+            throw new DomainException('dni contiene letra en medio');
+        }
+        if (!preg_match('/^[XYZ0-9]/', $dni)){
+            throw new DomainException('dni comienza por letra incorrecta');
+        }
+
+        throw new InvalidArgumentException('dni con matching incorrecto');
     }
 
     /**

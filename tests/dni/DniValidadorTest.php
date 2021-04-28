@@ -7,6 +7,7 @@ use Daw\Dni\DniValidador;
 use PHPUnit\Framework\TestCase;
 use LengthException;
 use DomainException;
+use InvalidArgumentException;
 
 /**
  * @coversDefaultClass \Daw\Dni\DniValidador
@@ -96,5 +97,35 @@ class DniValidadorTest extends TestCase{
             $this->expectException(DomainException::class);
             $this->expectExceptionMessage('dni contiene letra en medio');
         }
+    }   
+    
+    /**
+     * @covers ::__construct    
+     */
+    public function testDeberiaFallarCuandoDniEmpieceLetraIncorrecta(){
+        $dni = 'A1234567A';
+
+        try{
+            $sut = new DniValidador($dni);
+        }
+        finally{
+            $this->expectException(DomainException::class);
+            $this->expectExceptionMessage('dni comienza por letra incorrecta');
+        }
     }      
+
+    /**
+     * @covers ::__construct    
+     */
+    public function testDeberiaFallarCuandoDniTermineLetraConMatchingIncorrecto(){
+        $dni = '00000000A';
+
+        try{
+            $sut = new DniValidador($dni);
+        }
+        finally{
+            $this->expectException(InvalidArgumentException::class);
+            $this->expectExceptionMessage('dni con matching incorrecto');
+        }
+    }       
 }
