@@ -16,7 +16,7 @@ class DniValidadorTest extends TestCase{
     /**
      * @covers ::__construct    
      */
-    public function testDeberiaFallarSiLongitudEsMayorQueLongitudMaxima(){
+    public function testDeberiaFallarCuandoLongitudEsMayorQueLongitudMaxima(){
         $dni = '1234567890';
 
         try{
@@ -30,7 +30,7 @@ class DniValidadorTest extends TestCase{
     /**
      * @covers ::__construct    
      */
-    public function testDeberiaFallarSiLongitudEsMenorQueLongitudMinima(){
+    public function testDeberiaFallarCuandoLongitudEsMenorQueLongitudMinima(){
         $dni = '12345678';
 
         try{
@@ -44,7 +44,7 @@ class DniValidadorTest extends TestCase{
     /**
      * @covers ::__construct    
      */
-    public function testDeberiaFallarDniTerminaEnNumero(){
+    public function testDeberiaFallarCuandoDniTerminaEnNumero(){
         $dni = '123456789';
 
         try{
@@ -54,5 +54,20 @@ class DniValidadorTest extends TestCase{
             $this->expectException(DomainException::class);
             $this->expectExceptionMessage('dni termina en número');
         }
-    }      
+    }     
+    
+    /**
+     * @covers ::__construct    
+     */
+    public function testDeberiaFallarCuandoDniTerminaEnLetraIncorrecta(){
+        $dni = '12345678I';
+
+        try{
+            $sut = new DniValidador($dni);
+        }
+        finally{
+            $this->expectException(DomainException::class);
+            $this->expectExceptionMessage('dni termina letra incorrecta');
+        }
+    }     
 }

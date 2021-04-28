@@ -12,7 +12,11 @@ class DniValidador {
     public function __construct(string $dni){
         $this->comprobarLongitudCorrecta($dni);
 
-        throw new DomainException('dni termina en número');
+        if(preg_match('/\d$/', $dni)){
+            throw new DomainException('dni termina en número');
+        }
+
+        throw new DomainException('dni termina letra incorrecta');
     }
 
     /**
